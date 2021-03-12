@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>test</title>
+    <url>/2021/03/12/13-18-06/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>iTerm2 + Oh My Zsh改造终端记录</title>
+    <url>/2021/03/12/17-21-07/</url>
+    <content><![CDATA[<div class="note success"><p>iTerm2 + Oh My Zsh </p>
+</div>
+
+<span id="more"></span>
+
+<h1 id="iTerm2-Oh-My-Zsh改造终端记录"><a href="#iTerm2-Oh-My-Zsh改造终端记录" class="headerlink" title="iTerm2 + Oh My Zsh改造终端记录"></a>iTerm2 + Oh My Zsh改造终端记录</h1><h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><h3 id="Homebrew是什么？"><a href="#Homebrew是什么？" class="headerlink" title="Homebrew是什么？"></a>Homebrew是什么？</h3><blockquote>
+<p>Homebrew是Mac OS 不可或缺的套件管理器。</p>
+</blockquote>
+<p>Homebrew是一款Mac OS平台下的软件包管理工具，拥有安装、卸载、更新、查看、搜索等很多实用的功能。简单的一条指令，就可以实现包管理，而不用你关心各种依赖和文件路径的情况，十分方便快捷。</p>
+<h3 id="Homebrew的安装方法"><a href="#Homebrew的安装方法" class="headerlink" title="Homebrew的安装方法"></a>Homebrew的安装方法</h3><ol>
+<li>官方的安装方法，将以下命令粘贴到终端</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>因为网络问题，推荐采用国内地址的自动脚本进行安装，且自动更换至国内镜像</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/bin/zsh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Homebrew如何使用"><a href="#Homebrew如何使用" class="headerlink" title="Homebrew如何使用"></a>Homebrew如何使用</h3><p>知道软件包具体名称，直接 <code>brew install 软件包名</code> 只知道一小部分名称，用 <code>brew search 小部分名称</code> 查询即可 例如<code>brew search chrome</code>就会把带chrome的软件包全部列出</p>
+<h3 id="Homebrew中的扩展cask如何使用"><a href="#Homebrew中的扩展cask如何使用" class="headerlink" title="Homebrew中的扩展cask如何使用"></a>Homebrew中的扩展cask如何使用</h3><p>假设安装firefox：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install --cask firefox</span><br></pre></td></tr></table></figure>
+
+<h2 id="iTerm2安装与配置"><a href="#iTerm2安装与配置" class="headerlink" title="iTerm2安装与配置"></a>iTerm2安装与配置</h2><h3 id="安装方法"><a href="#安装方法" class="headerlink" title="安装方法"></a>安装方法</h3><ol>
+<li><p>官网下载，<a href="https://iterm2.com/">iTerm2</a></p>
+</li>
+<li><p>使用Homebrew进行安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install --cask iterm2</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="配置iTerm2"><a href="#配置iTerm2" class="headerlink" title="配置iTerm2"></a>配置iTerm2</h3><ol>
+<li><p>将iTerm2设置为默认终端，<code>iTerm2 -&gt; Make iTerm2 Default Term</code></p>
+</li>
+<li><p>更改配色方案，个人最喜欢的配色方案是solarized</p>
+<ul>
+<li>除了默认主题，更多主题可以通过主题面板<a href="https://github.com/mbadolato/iTerm2-Color-Schemes">https://github.com/mbadolato/iTerm2-Color-Schemes</a>，或者<a href="https://github.com/mbadolato/iTerm2-Color-Schemes">https://github.com/mbadolato/iTerm2-Color-Schemes</a>下载压缩包</li>
+<li><code>preference-&gt;profiles-&gt;colors-&gt;color presets-&gt;import</code></li>
+</ul>
+</li>
+<li><p>安装PowerFonts</p>
+<ul>
+<li>安装字体库需要首先将项目git clone至本地，然后执行源码中的install.sh</li>
+<li>在任意位置执行：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">clone</span></span></span><br><span class="line">git clone https://github.com/powerline/fonts.git --depth=1</span><br><span class="line"><span class="meta">#</span><span class="bash"> install</span></span><br><span class="line">cd fonts</span><br><span class="line">./install.sh</span><br><span class="line"><span class="meta">#</span><span class="bash"> clean-up a bit</span></span><br><span class="line">cd ..</span><br><span class="line">rm -rf fonts</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置字体，<code>iTerm2 -&gt; Preferences -&gt; Profiles -&gt; Text</code>，推荐Meslo LG字体</li>
+</ul>
+</li>
+</ol>
+<h2 id="Oh-my-zsh的安装与配置"><a href="#Oh-my-zsh的安装与配置" class="headerlink" title="Oh my zsh的安装与配置"></a>Oh my zsh的安装与配置</h2><h3 id="安装方法-1"><a href="#安装方法-1" class="headerlink" title="安装方法"></a>安装方法</h3><ol>
+<li><p>自动化安装官方提供了两种方式：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sh -c &quot;$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>同样的，因为网络问题，可能会导致安装很慢，甚至失败，推荐采用以下的方式手动安装</p>
+<ol>
+<li><p>把 oh-my-zsh 项目 Clone 下来：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh</span><br></pre></td></tr></table></figure></li>
+<li><p>备份之前的zsh配置文件（如果有的话）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp ~/.zshrc ~/.zshrc.orig</span><br></pre></td></tr></table></figure></li>
+<li><p>创建一个新的zsh配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br></pre></td></tr></table></figure></li>
+<li><p>更改默认的Shell</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h3 id="配置zsh"><a href="#配置zsh" class="headerlink" title="配置zsh"></a>配置zsh</h3><h4 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h4><p>oh-my-zsh自带了很多主题，在~/.oh-my-zsh/themes目录下可以查看，更多的主题选择<a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes">https://github.com/ohmyzsh/ohmyzsh/wiki/Themes</a></p>
+<ol>
+<li><p>打开zshrc配置文件，将ZSH_THEME后面的字段改为所选主题</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p>设置参数<code>ZSH_THEME=agnoster</code></p>
+</li>
+<li><p>更新配置文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><p>由于选择了agnoster主题，还需要安装PowerLine，Powerline是agnoster主题的依赖</p>
+<ul>
+<li><p>安装Powerline：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install powerline-status --user</span><br></pre></td></tr></table></figure>
+
+<p>没有安装pip可能会碰到<code>zsh: command not found: pip</code></p>
+<p>使用命令安装即可：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo easy_install pip</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h4><ul>
+<li><p>安装高亮插件</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure></li>
+<li><p>安装命令建议和补全</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure></li>
+<li><p>编辑配置文件<code>vi ~/.zshrc</code>，定位至<code>plugins=( [plugins...])</code>进行添加</p>
+<ul>
+<li>请务必保证插件顺序，zsh-syntax-highlighting必须在最后一个</li>
+</ul>
+</li>
+<li><p>更新配置文件<code>source ~/.zshrc</code></p>
+</li>
+<li><p>更多插件，插件的目录有两个：</p>
+<ul>
+<li>/Users/user/.oh-my-zsh/plugins: oh-my-zsh 官方插件目录，该目录已经预装了很多实用的插件，只不过没激活而已</li>
+<li>/Users/user/.oh-my-zsh/custom/plugins: oh-my-zsh 第三方插件目录<br>安装插件只需要把插件下载到上面任何一个目录，然后在.zshrc文件的plugins变量中添加对应插件的名称即可</li>
+</ul>
+</li>
+</ul>
+<h4 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h4><ul>
+<li>路径前缀太长：在<code>~/.oh-my-zsh/themes</code>路径下找到<code>agnoster.zsh-theme</code>文件，可使用文本工具打开，将里面的<code>build_prompt</code>下的<code>prompt_context</code>字段在前面加<code>#</code>注释掉</li>
+<li>打印很多警告，将<code>ZSH_DISABLE_COMPFIX=&quot;true&quot;</code>加入<code>~/.zshrc</code>文件中并重新启动zsh</li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>终端</tag>
+        <tag>配置</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>test1</title>
+    <url>/2021/03/12/13-18-48/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>比特币：数字货币</title>
+    <url>/2021/03/12/11-30-16/</url>
+    <content><![CDATA[<h2 id="去中心化电子记账系统"><a href="#去中心化电子记账系统" class="headerlink" title="去中心化电子记账系统"></a>去中心化电子记账系统</h2><ol>
+<li>以谁的账单为准</li>
+<li>为何要记账</li>
+<li>如何防伪（交易记录是否为真、重复交易是否存在等）</li>
+<li>如何防止双重支付</li>
+<li>如何保护个人信息</li>
+</ol>
+<span id="more"></span>
+
+<h2 id="Q1-为何要记账？"><a href="#Q1-为何要记账？" class="headerlink" title="Q1 为何要记账？"></a>Q1 为何要记账？</h2><p>记账的奖励：</p>
+<ol>
+<li>手续费</li>
+<li>打包奖励</li>
+</ol>
+<h2 id="Q2-以谁的账单为准"><a href="#Q2-以谁的账单为准" class="headerlink" title="Q2 以谁的账单为准"></a>Q2 以谁的账单为准</h2><p>工作量证明：每一个参与的用户都要去做一个很难的数学题，以获取打包权，即挖矿。</p>
+<h3 id="挖坑原理"><a href="#挖坑原理" class="headerlink" title="挖坑原理"></a>挖坑原理</h3><ol>
+<li>哈希函数（正向容易，反向困难）</li>
+<li>原理：<ol>
+<li>字符串：前块头部+账单+时间戳+<strong>随机数</strong></li>
+<li>Hash = sha256(sha256(字符串))</li>
+<li>前n位是0，通过改变随机数</li>
+</ol>
+</li>
+<li>难度n的确定：2的n次幂接近于参与的用户的计算力在十分钟内的总和</li>
+</ol>
+<h2 id="Q3-身份验证"><a href="#Q3-身份验证" class="headerlink" title="Q3 身份验证"></a>Q3 身份验证</h2><h3 id="电子签名"><a href="#电子签名" class="headerlink" title="电子签名"></a>电子签名</h3><p>随机数 –&gt; 私钥 –&gt; 公钥 –&gt; 地址</p>
+<ol>
+<li>私钥是个人保密的</li>
+<li>公钥与地址是公开的</li>
+<li>通过私钥加密的信息可以由公钥进行解密，这种加密解密说用钥匙不一样的加密方式称之为<strong>非对称加密</strong>，常见的有RSA加密。<ol>
+<li>用户a将一条支付记录通过Hash算法(sha256)形成摘要</li>
+<li>摘要通过个人私钥进行加密形成密码</li>
+<li>广播支付记录+公钥+密码</li>
+<li>接受到这则广播的用户，对这条支付信息通过Hash算法(sha256)形成摘要m，同时根据公钥和密码进行解密形成摘要n。如果m=n，则这条记录真实且广播由a发出。如果m≠n，则可以认为这条记录和广播是伪造的</li>
+</ol>
+</li>
+</ol>
+<h2 id="Q5-双重支付问题"><a href="#Q5-双重支付问题" class="headerlink" title="Q5 双重支付问题"></a>Q5 双重支付问题</h2><h3 id="余额"><a href="#余额" class="headerlink" title="余额"></a>余额</h3><p>通过追溯检测机制</p>
+<h3 id="如何防止双重支付"><a href="#如何防止双重支付" class="headerlink" title="如何防止双重支付"></a>如何防止双重支付</h3><p>接受到一条支付记录时，不能立即认为钱已经到账，需等到新块形成并上主链（由自己或其他人完成）</p>
+<h2 id="Q6-防止篡改"><a href="#Q6-防止篡改" class="headerlink" title="Q6 防止篡改"></a>Q6 防止篡改</h2><h3 id="最长链原则"><a href="#最长链原则" class="headerlink" title="最长链原则"></a>最长链原则</h3><p>当同时产生两个主链的下一个新块时，以哪一块先产生下一个新块最准，即哪个新块能更早产生更长的链，普遍认为最长链是最有希望成为公认原则的</p>
+<h3 id="如何防止篡改"><a href="#如何防止篡改" class="headerlink" title="如何防止篡改"></a>如何防止篡改</h3><p>理论上支持通过打包新块来改动，但在该新块的支链长度超过主链前，不被承认。当个人计算力超过主链上所有人的计算能力时，才有可能进行篡改。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>比特币</tag>
+      </tags>
+  </entry>
+</search>
