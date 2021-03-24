@@ -1,6 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Mac使用brew安装MySQL</title>
+    <url>/2021/03/24/20-12-46/</url>
+    <content><![CDATA[<div class="note success"><p>brew 安装 MySQL </p>
+</div>
+
+<span id="more"></span>
+
+<h2 id="查询MySQL"><a href="#查询MySQL" class="headerlink" title="查询MySQL"></a>查询MySQL</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew search mysql</span><br><span class="line">==&gt; Formulae</span><br><span class="line">automysqlbackup           mysql-client@5.7          mysql@5.6</span><br><span class="line">mysql                     mysql-connector-c++       mysql@5.7</span><br><span class="line">mysql++                   mysql-sandbox             mysqltuner</span><br><span class="line">mysql-client              mysql-search-replace      qt-mysql</span><br><span class="line">==&gt; Casks</span><br><span class="line">mysql-connector-python    mysql-utilities           navicat-for-mysql</span><br><span class="line">mysql-shell               mysqlworkbench            sqlpro-for-mysql</span><br></pre></td></tr></table></figure>
+
+<p>可以看到有很多版本，使用<code>brew info</code>命令可以查看信息。默认的mysql版本为5.8，我们选择安装更稳定的5.7</p>
+<h2 id="安装MySQL5-7"><a href="#安装MySQL5-7" class="headerlink" title="安装MySQL5.7"></a>安装MySQL5.7</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install mysql@5.7</span><br></pre></td></tr></table></figure>
+
+<p>如果不慎安装了默认版本想要回退5.7版本，可以执行以下命令，（注意提前备份数据）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew uninstall mysql</span><br><span class="line">rm -rf /usr/local/var/mysql</span><br><span class="line">rm /usr/local/etc/my.cnf</span><br><span class="line">brew install mysql@5.7</span><br></pre></td></tr></table></figure>
+
+<p>链接可执行文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew link --force mysql@5.7</span><br></pre></td></tr></table></figure>
+
+<p>添加环境变量至配置文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &#x27;export PATH=&quot;/usr/local/opt/mysql@5.7/bin:$PATH&quot;&#x27; &gt;&gt; ~/.zshrc</span><br><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动MySQL"><a href="#启动MySQL" class="headerlink" title="启动MySQL"></a>启动MySQL</h2><p>开机默认启动，执行命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew services start mysql@5.7</span><br></pre></td></tr></table></figure>
+
+<p>或者一次启动</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql.server start</span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a>初始化配置</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql_secure_installation</span><br><span class="line"></span><br><span class="line">Securing the MySQL server deployment.</span><br><span class="line"></span><br><span class="line">Connecting to MySQL using a blank password.</span><br><span class="line"></span><br><span class="line">VALIDATE PASSWORD PLUGIN can be used to test passwords</span><br><span class="line">and improve security. It checks the strength of password</span><br><span class="line">and allows the users to set only those passwords which are</span><br><span class="line">secure enough. Would you like to setup VALIDATE PASSWORD plugin?</span><br><span class="line"></span><br><span class="line">//yes选项密码长度就必须设置为8位以上，no为6位</span><br><span class="line">Press y|Y for Yes, any other key for No: n</span><br><span class="line">Please set the password for root here.</span><br><span class="line"></span><br><span class="line">//设置密码</span><br><span class="line">New password:</span><br><span class="line"></span><br><span class="line">//确认密码</span><br><span class="line">Re-enter new password:</span><br><span class="line">By default, a MySQL installation has an anonymous user,</span><br><span class="line">allowing anyone to log into MySQL without having to have</span><br><span class="line">a user account created for them. This is intended only for</span><br><span class="line">testing, and to make the installation go a bit smoother.</span><br><span class="line">You should remove them before moving into a production</span><br><span class="line">environment.</span><br><span class="line"></span><br><span class="line">//移除不用密码的用户</span><br><span class="line">Remove anonymous users? (Press y|Y for Yes, any other key for No) : y</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Normally, root should only be allowed to connect from</span><br><span class="line">&#x27;localhost&#x27;. This ensures that someone cannot guess at</span><br><span class="line">the root password from the network.</span><br><span class="line"></span><br><span class="line">//是否接受root远程登录</span><br><span class="line">Disallow root login remotely? (Press y|Y for Yes, any other key for No) : n</span><br><span class="line"></span><br><span class="line"> ... skipping.</span><br><span class="line">By default, MySQL comes with a database named &#x27;test&#x27; that</span><br><span class="line">anyone can access. This is also intended only for testing,</span><br><span class="line">and should be removed before moving into a production</span><br><span class="line">environment.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//删除test数据库</span><br><span class="line">Remove test database and access to it? (Press y|Y for Yes, any other key for No) : y</span><br><span class="line"> - Dropping test database...</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line"> - Removing privileges on test database...</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line">Reloading the privilege tables will ensure that all changes</span><br><span class="line">made so far will take effect immediately.</span><br><span class="line"></span><br><span class="line">Reload privilege tables now? (Press y|Y for Yes, any other key for No) : y</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line">All done!</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>配置</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>比特币：数字货币</title>
+    <url>/2021/03/12/11-30-16/</url>
+    <content><![CDATA[<h2 id="去中心化电子记账系统"><a href="#去中心化电子记账系统" class="headerlink" title="去中心化电子记账系统"></a>去中心化电子记账系统</h2><ol>
+<li>以谁的账单为准</li>
+<li>为何要记账</li>
+<li>如何防伪（交易记录是否为真、重复交易是否存在等）</li>
+<li>如何防止双重支付</li>
+<li>如何保护个人信息</li>
+</ol>
+<span id="more"></span>
+
+<h2 id="Q1-为何要记账？"><a href="#Q1-为何要记账？" class="headerlink" title="Q1 为何要记账？"></a>Q1 为何要记账？</h2><p>记账的奖励：</p>
+<ol>
+<li>手续费</li>
+<li>打包奖励</li>
+</ol>
+<h2 id="Q2-以谁的账单为准"><a href="#Q2-以谁的账单为准" class="headerlink" title="Q2 以谁的账单为准"></a>Q2 以谁的账单为准</h2><p>工作量证明：每一个参与的用户都要去做一个很难的数学题，以获取打包权，即挖矿。</p>
+<h3 id="挖坑原理"><a href="#挖坑原理" class="headerlink" title="挖坑原理"></a>挖坑原理</h3><ol>
+<li>哈希函数（正向容易，反向困难）</li>
+<li>原理：<ol>
+<li>字符串：前块头部+账单+时间戳+<strong>随机数</strong></li>
+<li>Hash = sha256(sha256(字符串))</li>
+<li>前n位是0，通过改变随机数</li>
+</ol>
+</li>
+<li>难度n的确定：2的n次幂接近于参与的用户的计算力在十分钟内的总和</li>
+</ol>
+<h2 id="Q3-身份验证"><a href="#Q3-身份验证" class="headerlink" title="Q3 身份验证"></a>Q3 身份验证</h2><h3 id="电子签名"><a href="#电子签名" class="headerlink" title="电子签名"></a>电子签名</h3><p>随机数 –&gt; 私钥 –&gt; 公钥 –&gt; 地址</p>
+<ol>
+<li>私钥是个人保密的</li>
+<li>公钥与地址是公开的</li>
+<li>通过私钥加密的信息可以由公钥进行解密，这种加密解密说用钥匙不一样的加密方式称之为<strong>非对称加密</strong>，常见的有RSA加密。<ol>
+<li>用户a将一条支付记录通过Hash算法(sha256)形成摘要</li>
+<li>摘要通过个人私钥进行加密形成密码</li>
+<li>广播支付记录+公钥+密码</li>
+<li>接受到这则广播的用户，对这条支付信息通过Hash算法(sha256)形成摘要m，同时根据公钥和密码进行解密形成摘要n。如果m=n，则这条记录真实且广播由a发出。如果m≠n，则可以认为这条记录和广播是伪造的</li>
+</ol>
+</li>
+</ol>
+<h2 id="Q5-双重支付问题"><a href="#Q5-双重支付问题" class="headerlink" title="Q5 双重支付问题"></a>Q5 双重支付问题</h2><h3 id="余额"><a href="#余额" class="headerlink" title="余额"></a>余额</h3><p>通过追溯检测机制</p>
+<h3 id="如何防止双重支付"><a href="#如何防止双重支付" class="headerlink" title="如何防止双重支付"></a>如何防止双重支付</h3><p>接受到一条支付记录时，不能立即认为钱已经到账，需等到新块形成并上主链（由自己或其他人完成）</p>
+<h2 id="Q6-防止篡改"><a href="#Q6-防止篡改" class="headerlink" title="Q6 防止篡改"></a>Q6 防止篡改</h2><h3 id="最长链原则"><a href="#最长链原则" class="headerlink" title="最长链原则"></a>最长链原则</h3><p>当同时产生两个主链的下一个新块时，以哪一块先产生下一个新块最准，即哪个新块能更早产生更长的链，普遍认为最长链是最有希望成为公认原则的</p>
+<h3 id="如何防止篡改"><a href="#如何防止篡改" class="headerlink" title="如何防止篡改"></a>如何防止篡改</h3><p>理论上支持通过打包新块来改动，但在该新块的支链长度超过主链前，不被承认。当个人计算力超过主链上所有人的计算能力时，才有可能进行篡改。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+        <tag>比特币</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>iTerm2 + Oh My Zsh改造终端记录</title>
     <url>/2021/03/12/17-21-07/</url>
     <content><![CDATA[<div class="note success"><p>iTerm2 + Oh My Zsh </p>
@@ -8,7 +99,7 @@
 
 <span id="more"></span>
 
-<h1 id="iTerm2-Oh-My-Zsh改造终端记录"><a href="#iTerm2-Oh-My-Zsh改造终端记录" class="headerlink" title="iTerm2 + Oh My Zsh改造终端记录"></a>iTerm2 + Oh My Zsh改造终端记录</h1><h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><h3 id="Homebrew是什么？"><a href="#Homebrew是什么？" class="headerlink" title="Homebrew是什么？"></a>Homebrew是什么？</h3><blockquote>
+<h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><h3 id="Homebrew是什么？"><a href="#Homebrew是什么？" class="headerlink" title="Homebrew是什么？"></a>Homebrew是什么？</h3><blockquote>
 <p>Homebrew是Mac OS 不可或缺的套件管理器。</p>
 </blockquote>
 <p>Homebrew是一款Mac OS平台下的软件包管理工具，拥有安装、卸载、更新、查看、搜索等很多实用的功能。简单的一条指令，就可以实现包管理，而不用你关心各种依赖和文件路径的情况，十分方便快捷。</p>
@@ -121,61 +212,8 @@
         <category>系统</category>
       </categories>
       <tags>
-        <tag>终端</tag>
         <tag>配置</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>比特币：数字货币</title>
-    <url>/2021/03/12/11-30-16/</url>
-    <content><![CDATA[<h2 id="去中心化电子记账系统"><a href="#去中心化电子记账系统" class="headerlink" title="去中心化电子记账系统"></a>去中心化电子记账系统</h2><ol>
-<li>以谁的账单为准</li>
-<li>为何要记账</li>
-<li>如何防伪（交易记录是否为真、重复交易是否存在等）</li>
-<li>如何防止双重支付</li>
-<li>如何保护个人信息</li>
-</ol>
-<span id="more"></span>
-
-<h2 id="Q1-为何要记账？"><a href="#Q1-为何要记账？" class="headerlink" title="Q1 为何要记账？"></a>Q1 为何要记账？</h2><p>记账的奖励：</p>
-<ol>
-<li>手续费</li>
-<li>打包奖励</li>
-</ol>
-<h2 id="Q2-以谁的账单为准"><a href="#Q2-以谁的账单为准" class="headerlink" title="Q2 以谁的账单为准"></a>Q2 以谁的账单为准</h2><p>工作量证明：每一个参与的用户都要去做一个很难的数学题，以获取打包权，即挖矿。</p>
-<h3 id="挖坑原理"><a href="#挖坑原理" class="headerlink" title="挖坑原理"></a>挖坑原理</h3><ol>
-<li>哈希函数（正向容易，反向困难）</li>
-<li>原理：<ol>
-<li>字符串：前块头部+账单+时间戳+<strong>随机数</strong></li>
-<li>Hash = sha256(sha256(字符串))</li>
-<li>前n位是0，通过改变随机数</li>
-</ol>
-</li>
-<li>难度n的确定：2的n次幂接近于参与的用户的计算力在十分钟内的总和</li>
-</ol>
-<h2 id="Q3-身份验证"><a href="#Q3-身份验证" class="headerlink" title="Q3 身份验证"></a>Q3 身份验证</h2><h3 id="电子签名"><a href="#电子签名" class="headerlink" title="电子签名"></a>电子签名</h3><p>随机数 –&gt; 私钥 –&gt; 公钥 –&gt; 地址</p>
-<ol>
-<li>私钥是个人保密的</li>
-<li>公钥与地址是公开的</li>
-<li>通过私钥加密的信息可以由公钥进行解密，这种加密解密说用钥匙不一样的加密方式称之为<strong>非对称加密</strong>，常见的有RSA加密。<ol>
-<li>用户a将一条支付记录通过Hash算法(sha256)形成摘要</li>
-<li>摘要通过个人私钥进行加密形成密码</li>
-<li>广播支付记录+公钥+密码</li>
-<li>接受到这则广播的用户，对这条支付信息通过Hash算法(sha256)形成摘要m，同时根据公钥和密码进行解密形成摘要n。如果m=n，则这条记录真实且广播由a发出。如果m≠n，则可以认为这条记录和广播是伪造的</li>
-</ol>
-</li>
-</ol>
-<h2 id="Q5-双重支付问题"><a href="#Q5-双重支付问题" class="headerlink" title="Q5 双重支付问题"></a>Q5 双重支付问题</h2><h3 id="余额"><a href="#余额" class="headerlink" title="余额"></a>余额</h3><p>通过追溯检测机制</p>
-<h3 id="如何防止双重支付"><a href="#如何防止双重支付" class="headerlink" title="如何防止双重支付"></a>如何防止双重支付</h3><p>接受到一条支付记录时，不能立即认为钱已经到账，需等到新块形成并上主链（由自己或其他人完成）</p>
-<h2 id="Q6-防止篡改"><a href="#Q6-防止篡改" class="headerlink" title="Q6 防止篡改"></a>Q6 防止篡改</h2><h3 id="最长链原则"><a href="#最长链原则" class="headerlink" title="最长链原则"></a>最长链原则</h3><p>当同时产生两个主链的下一个新块时，以哪一块先产生下一个新块最准，即哪个新块能更早产生更长的链，普遍认为最长链是最有希望成为公认原则的</p>
-<h3 id="如何防止篡改"><a href="#如何防止篡改" class="headerlink" title="如何防止篡改"></a>如何防止篡改</h3><p>理论上支持通过打包新块来改动，但在该新块的支链长度超过主链前，不被承认。当个人计算力超过主链上所有人的计算能力时，才有可能进行篡改。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-        <tag>比特币</tag>
+        <tag>终端</tag>
       </tags>
   </entry>
 </search>
